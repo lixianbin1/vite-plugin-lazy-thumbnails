@@ -1,6 +1,6 @@
 # Changelog
 
-[En] (./README.md)
+[En] (./README_en.md)
 
 A Vite plugin that generates image thumbnails and implements progressive image loading effects on page load
 
@@ -15,3 +15,9 @@ Key features:
 ## v0.1.0
 
 Complete the above basic functions (thumbnail generation, progressive loading, blur transitions).
+
+## v0.2.0
+
+- Modified the blur transition effect
+- Modify the regular expression for background image processing
+- Added format preservation option (output format based on original format)
