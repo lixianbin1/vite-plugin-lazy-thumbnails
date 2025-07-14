@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-lazy-thumbnails",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "一个 Vite 插件，用于生成图片缩略图并在页面加载时实现渐进式图片加载效果",
   "main": "./src/index.min.js",
   "keywords": [
