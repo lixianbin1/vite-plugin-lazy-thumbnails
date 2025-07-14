@@ -1,0 +1,38 @@
+{
+  "name": "vite-plugin-lazy-thumbnails",
+  "version": "0.1.0",
+  "description": "一个 Vite 插件，用于生成图片缩略图并在页面加载时实现渐进式图片加载效果",
+  "main": "./src/index.min.js",
+  "keywords": [
+    "插件",
+    "图片懒加载",
+    "缩略图片加载",
+    "lazy",
+    "thumbnail",
+    "vite",
+    "plugin",
+    "loading",
+    "progressive"
+  ],
+  "scripts": {
+    "type": "npx -p typescript tsc",
+    "terser":"terser ./src/index.js -o ./src/index.min.js -c passes=3 -m"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lixianbin1/vite-plugin-lazy-thumbnails.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lixianbin1/vite-plugin-lazy-thumbnails/issues"
+  },
+  "homepage": "https://github.com/lixianbin1/vite-plugin-lazy-thumbnails#readme",
+  "devDependencies": {
+    "sharp": "^0.32.0",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "terser": "^5.43.1"
+  }
+}
