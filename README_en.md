@@ -36,3 +36,26 @@ export default defineConfig({
   // ...
 })
 ```
+
+## Related configurations
+
+```js
+// vite.config.js
+import lazyThumbnail from 'vite-plugin-lazy-thumbnails';
+
+export default defineConfig({
+  plugins: [
+    lazyThumbnail({
+      quality: 30, //Thumbnail quality
+      width: 50, //Thumbnail width
+      height: null, //Highly adaptive
+      skipSmallImages: true, //Skip the small image
+      minSizeToResize: 30, //How many KB are not processed
+      format: 'auto', //Output format
+      blurAmount: 2, //Blurred pixels
+      transitionDuration: '0.3s'
+    }),
+  ],
+  // . ..
+})
+```
