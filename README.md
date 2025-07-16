@@ -25,12 +25,33 @@ npm install vite-plugin-lazy-thumbnails
 在Vite.config中使用，打包编译的时候，插件会自动执行并将图片进行缩略化显示
 ```js
 // vite.config.js
-import thumbnail from 'vite-plugin-lazy-thumbnails';
+import lazyThumbnail from 'vite-plugin-lazy-thumbnails';
 
 export default defineConfig({
   plugins: [
-    thumbnail({
+    lazyThumbnail(),
+  ],
+  // ...
+})
+```
 
+## 相关配置
+
+```js
+// vite.config.js
+import lazyThumbnail from 'vite-plugin-lazy-thumbnails';
+
+export default defineConfig({
+  plugins: [
+    lazyThumbnail({
+      quality: 30,          // 缩略图质量
+      width: 50,            // 缩略图宽度
+      height: null,         // 高度自适应
+      skipSmallImages: true,// 跳过小图
+      minSizeToResize: 30,  // 小于多少KB不处理
+      format: 'auto',       // 输出格式
+      blurAmount: 2,        // 模糊像素
+      transitionDuration: '0.3s'
     }),
   ],
   // ...

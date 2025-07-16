@@ -25,14 +25,37 @@ npm install vite-plugin-lazy-thumbnails
 In Vite.config, when packaging and compiling, the plugin will automatically execute and abbreviate the image
 ```js
 // vite.config.js
-import thumbnail from 'vite-plugin-lazy-thumbnails';
+import lazyThumbnail from 'vite-plugin-lazy-thumbnails';
 
 export default defineConfig({
   plugins: [
-    thumbnail({
+    lazyThumbnail({
 
     }),
   ],
   // ...
+})
+```
+
+## Related configurations
+
+```js
+// vite.config.js
+import lazyThumbnail from 'vite-plugin-lazy-thumbnails';
+
+export default defineConfig({
+  plugins: [
+    lazyThumbnail({
+      quality: 30, //Thumbnail quality
+      width: 50, //Thumbnail width
+      height: null, //Highly adaptive
+      skipSmallImages: true, //Skip the small image
+      minSizeToResize: 30, //How many KB are not processed
+      format: 'auto', //Output format
+      blurAmount: 2, //Blurred pixels
+      transitionDuration: '0.3s'
+    }),
+  ],
+  // . ..
 })
 ```
