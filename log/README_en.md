@@ -26,3 +26,11 @@ Complete the above basic functions (thumbnail generation, progressive loading, b
 
 - Added logic to prioritize caching if images are cached (to prevent flickering caused by page refreshing replacement paths)
 - Fixed an issue where "t" in the path caused the path to be incorrect
+
+# v0.3.1
+
+  Update the configuration introduction in the README document
+
+# v0.3.2
+
+  Update the query keywords for npm packages
