@@ -44,13 +44,10 @@ import lazyThumbnail from 'vite-plugin-lazy-thumbnails';
 export default defineConfig({
   plugins: [
     lazyThumbnail({
-      quality: 30,          // 缩略图质量
-      width: 50,            // 缩略图宽度
-      height: null,         // 高度自适应
+      quality: 10,          // 缩略图质量
       skipSmallImages: true,// 跳过小图
       minSizeToResize: 30,  // 小于多少KB不处理
-      format: 'auto',       // 输出格式
-      blurAmount: 2,        // 模糊像素
+      blurAmount: 3,        // 模糊像素
       transitionDuration: '0.3s'
     }),
   ],
