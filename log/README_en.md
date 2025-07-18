@@ -34,3 +34,10 @@ Complete the above basic functions (thumbnail generation, progressive loading, b
 # v0.3.2
 
   Update the query keywords for npm packages
+
+# v0.4.0
+
+ - Fixed the incorrect logic that caused background images in CSS to be ignored.
+ - Removed the width/height options for thumbnails (when a background image is not set to cover, these dimensions could break CSS background sizing).
+ - Removed the custom output-format option (current replacement logic does not support custom formats).
+ - Adjusted the default values of some parameters.
