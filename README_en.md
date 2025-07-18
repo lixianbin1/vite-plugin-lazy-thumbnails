@@ -1,5 +1,11 @@
 <h1 align="center">vite-plugin-lazy-thumbnails</h1>
 
+<p align="center">
+  <a href="https://npmcharts.com/compare/vite-plugin-lazy-thumbnails?minimal=true"><img src="https://img.shields.io/npm/dm/vite-plugin-lazy-thumbnails.svg?sanitize=true" alt="Downloads"></a>
+  <a href="https://www.npmjs.com/package/vite-plugin-lazy-thumbnails"><img src="https://img.shields.io/npm/v/vite-plugin-lazy-thumbnails.svg?sanitize=true" alt="Version"></a>
+  <a href="https://www.npmjs.com/package/vite-plugin-lazy-thumbnails"><img src="https://img.shields.io/npm/l/vite-plugin-lazy-thumbnails.svg?sanitize=true" alt="License"></a>
+</p>
+
 [中文] (./README.md)
 
 A Vite plugin for generating image thumbnails and implementing progressive image loading effects on page load, for optimizing the experience, simple and convenient

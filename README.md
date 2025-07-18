@@ -1,5 +1,11 @@
 <h1 align="center">vite-plugin-lazy-thumbnails</h1>
 
+<p align="center">
+  <a href="https://npmcharts.com/compare/vite-plugin-lazy-thumbnails?minimal=true"><img src="https://img.shields.io/npm/dm/vite-plugin-lazy-thumbnails.svg?sanitize=true" alt="Downloads"></a>
+  <a href="https://www.npmjs.com/package/vite-plugin-lazy-thumbnails"><img src="https://img.shields.io/npm/v/vite-plugin-lazy-thumbnails.svg?sanitize=true" alt="Version"></a>
+  <a href="https://www.npmjs.com/package/vite-plugin-lazy-thumbnails"><img src="https://img.shields.io/npm/l/vite-plugin-lazy-thumbnails.svg?sanitize=true" alt="License"></a>
+</p>
+
 [En](./README_en.md) 
 
 一个 Vite 插件，用于生成图片缩略图并在页面加载时实现渐进式图片加载效果，用于优化体验，简单，方便
