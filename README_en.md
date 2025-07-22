@@ -52,10 +52,12 @@ import lazyThumbnail from 'vite-plugin-lazy-thumbnails';
 export default defineConfig({
   plugins: [
     lazyThumbnail({
-      quality: 10, //Thumbnail quality
-      skipSmallImages: true, //Skip the small image
-      minSizeToResize: 30, //How many KB are not processed
-      blurAmount: 3, //Blurred pixels
+      quality: 10,          // Thumbnail quality
+      width: 64,            // Thumbnail width
+      skipSmallImages: true,// Skip the small image
+      skipBackground: true, // Skip background image
+      minSizeToResize: 30,  // How many KB are not processed
+      blurAmount: 3,        // Blurred pixels
       transitionDuration: '0.3s'
     }),
   ],

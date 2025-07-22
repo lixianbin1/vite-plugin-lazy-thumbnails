@@ -1,8 +1,8 @@
 /*!
- * vite-plugin-lazy-thumbnails JavaScript Library v0.4.0
+ * vite-plugin-lazy-thumbnails JavaScript Library v0.4.1
  * https://www.npmjs.com/package/vite-plugin-lazy-thumbnails
  *
- * Date: 2025-07-18T14:56Z
+ * Date: 2025-07-21T17:30Z
  */
 // 引入 Node.js 内置模块
 const path = require('path');                   // 路径处理
@@ -117,7 +117,9 @@ function thumbnailLoading(options = {}) {
   // 默认配置
   const defaultOptions = {
     quality: 10,          // 缩略图质量
+    width: 64,            // 缩略图宽度
     skipSmallImages: true,// 跳过小图
+    skipBackground: true, // 跳过背景图
     minSizeToResize: 30,  // 小于多少KB不处理
     blurAmount: 3,        // 模糊像素
     transitionDuration: '0.3s'
@@ -151,17 +153,17 @@ function thumbnailLoading(options = {}) {
             const thumbPath = path.join(path.dirname(filename), thumbName);
 
             // 创建缩略图
-            let processor = sharp(buffer)
-
             const ext = path.extname(filename).slice(1).toLowerCase();
-            await processor
+            const bufferOut = await sharp(buffer)
+              .resize(finalOptions.width)
               .toFormat(ext, { quality: finalOptions.quality })
+              .toBuffer();
 
             // 把缩略图塞进最终产物
             this.emitFile({
               type: 'asset',
               fileName: thumbPath,
-              source: await processor.toBuffer()
+              source: bufferOut
             });
           } catch (error) {
             console.error(`Failed to generate thumbnail for ${filename}:`, error);
@@ -169,17 +171,19 @@ function thumbnailLoading(options = {}) {
         })());
       }
       // 处理CSS
-      for (const [fileName, chunk] of Object.entries(bundle)) {
-        if (fileName.endsWith('.css') && chunk.type === 'asset') {
-          let css = chunk.source.toString();
-          css = css.replace(
-            /url\(["']?(.*?\.(?:jpg|png|jpeg|webp|avif|gif))["']?\)/gi,
-            (match, imgPath) => {
-              const thumbPath = getThumbnailPath(imgPath);
-              return `url("${thumbPath}")`;
-            }
-          );
-          chunk.source = Buffer.from(css);
+      if(!finalOptions.skipBackground){
+        for (const [fileName, chunk] of Object.entries(bundle)) {
+          if (fileName.endsWith('.css') && chunk.type === 'asset') {
+            let css = chunk.source.toString();
+            css = css.replace(
+              /url\(["']?(.*?\.(?:jpg|png|jpeg|webp|avif|gif))["']?\)/gi,
+              (match, imgPath) => {
+                const thumbPath = getThumbnailPath(imgPath);
+                return `url("${thumbPath}")`;
+              }
+            );
+            chunk.source = Buffer.from(css);
+          }
         }
       }
       await Promise.all(processPromises);

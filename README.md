@@ -51,7 +51,9 @@ export default defineConfig({
   plugins: [
     lazyThumbnail({
       quality: 10,          // 缩略图质量
+      width: 64,            // 缩略图宽度
       skipSmallImages: true,// 跳过小图
+      skipBackground: true, // 跳过背景图
       minSizeToResize: 30,  // 小于多少KB不处理
       blurAmount: 3,        // 模糊像素
       transitionDuration: '0.3s'
