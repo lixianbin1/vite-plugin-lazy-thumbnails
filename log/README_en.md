@@ -1,6 +1,6 @@
 # Changelog
 
-[En] (./README_en.md)
+[中文] (./README.md)
 
 A Vite plugin that generates image thumbnails and implements progressive image loading effects on page load
 
@@ -25,7 +25,7 @@ Complete the above basic functions (thumbnail generation, progressive loading, b
 ## v0.3.0
 
 - Added logic to prioritize caching if images are cached (to prevent flickering caused by page refreshing replacement paths)
-- Fixed an issue where "t" in the path caused the path to be incorrect
+- Fixed an issue where `\t` in the path caused the path to be incorrect
 
 # v0.3.1
 
@@ -41,3 +41,8 @@ Complete the above basic functions (thumbnail generation, progressive loading, b
  - Removed the width/height options for thumbnails (when a background image is not set to cover, these dimensions could break CSS background sizing).
  - Removed the custom output-format option (current replacement logic does not support custom formats).
  - Adjusted the default values of some parameters.
+
+# v0.4.1
+
+ - Due to the original size of the thumbnail still being too large, the algorithm was adjusted to proportionally reduce it
+ - Turn off the replacement scheme for the default background image. If you release it, please note that the background image needs to be styled as full.
