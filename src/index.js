@@ -1,5 +1,5 @@
 /*!
- * vite-plugin-lazy-thumbnails JavaScript Library v0.4.1
+ * vite-plugin-lazy-thumbnails JavaScript Library v0.4.2
  * https://www.npmjs.com/package/vite-plugin-lazy-thumbnails
  *
  * Date: 2025-07-21T17:30Z
@@ -33,34 +33,45 @@ const RUNTIME_SCRIPT = `
         // 计算原图路径（去掉 thumb_ 前缀）
         const originalSrc = src.replace(new RegExp('${THUMBNAIL_PREFIX}', 'g'), '');
 
-        // 先尝试从浏览器缓存直接加载原图
-        const cacheTest = new Image();
-        cacheTest.onload = function () {
-          // 缓存命中：直接替换，无闪屏
-          img.src = originalSrc;
-          img.dataset.loaded = 'true';
-        };
-        cacheTest.onerror = function () {
-          // 缓存未命中：走缩略图→原图过渡
-          // 创建原图加载
-          const tempImg = new Image();
-          tempImg.onload = function() {
-            // 加载成功：先模糊，再替换成原图，再取消模糊
-            img.style.filter = 'blur(0px)';
+        // 先记录缩略图的尺寸（在替换 src 前）
+        const thumbImg = new Image();
+        thumbImg.onload = () => {
+          const boxW = thumbImg.naturalWidth;
+          const boxH = thumbImg.naturalHeight;
+
+          // 保持缩略图占位尺寸
+          img.style.width = img.clientWidth + 'px';
+          img.style.height = img.clientHeight + 'px';
+
+          // 缓存检测
+          const cacheTest = new Image();
+          cacheTest.onload = () => {
+            // 缓存命中：直接替换
             img.src = originalSrc;
             img.dataset.loaded = 'true';
           };
-          tempImg.onerror = function () {
-            console.error('Failed to load image:', originalSrc);
-            img.style.filter = 'none';
-          };
-          tempImg.src = originalSrc;
+          cacheTest.onerror = () => {
+            // 缓存未命中：走缩略图→原图过渡
+            const tempImg = new Image();
+            tempImg.onload = () => {
+              // 加载成功：先模糊，再替换成原图，再取消模糊
+              img.style.filter = 'blur(0px)';
+              img.src = originalSrc;
+              img.dataset.loaded = 'true';
+            };
+            tempImg.onerror = () => {
+              console.error('Failed to load image:', originalSrc);
+              img.style.filter = 'none';
+            };
+            tempImg.src = originalSrc;
 
-          // 添加过渡效果
-          img.style.transition = 'filter 0.2s ease';
-          img.style.filter = 'blur(2px)';
+            // 添加过渡效果
+            img.style.transition = 'filter 0.2s ease';
+            img.style.filter = 'blur(2px)';
+          };
+          cacheTest.src = originalSrc; // 触发缓存检测
         };
-        cacheTest.src = originalSrc; // 触发缓存检测
+        thumbImg.src = src; // 加载缩略图以获取尺寸
       });
     }
 
@@ -116,8 +127,8 @@ const RUNTIME_SCRIPT = `
 function thumbnailLoading(options = {}) {
   // 默认配置
   const defaultOptions = {
-    quality: 10,          // 缩略图质量
-    width: 64,            // 缩略图宽度
+    quality: 30,          // 缩略图质量
+    width: 128,            // 缩略图宽度
     skipSmallImages: true,// 跳过小图
     skipBackground: true, // 跳过背景图
     minSizeToResize: 30,  // 小于多少KB不处理
@@ -179,7 +190,7 @@ function thumbnailLoading(options = {}) {
               /url\(["']?(.*?\.(?:jpg|png|jpeg|webp|avif|gif))["']?\)/gi,
               (match, imgPath) => {
                 const thumbPath = getThumbnailPath(imgPath);
-                return `url("${thumbPath}")`;
+                return `url("${thumbPath}") center / cover no-repeat`;
               }
             );
             chunk.source = Buffer.from(css);
