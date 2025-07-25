@@ -46,3 +46,8 @@ Complete the above basic functions (thumbnail generation, progressive loading, b
 
  - Due to the original size of the thumbnail still being too large, the algorithm was adjusted to proportionally reduce it
  - Turn off the replacement scheme for the default background image. If you release it, please note that the background image needs to be styled as full.
+
+# v0.4.2
+
+  - Add algorithms for thumbnail and rendering size to prevent height deviation of 1px and size fluctuations caused by thumbnail replacement of the original image
+  - Modify the style of the background image to fill the background container.
