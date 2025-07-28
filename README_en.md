@@ -10,6 +10,12 @@
 
 A Vite plugin for generating image thumbnails and implementing progressive image loading effects on page load, for optimizing the experience, simple and convenient
 
+apply to：
+ 
+ - The project built by Vite
+ - If your picture is too large, you can use it.
+ - If you want to avoid grid loading of images when accessing a page, you can use it
+
 Key features:
 
  - Thumbnail generation: Generate low-quality, small-sized thumbnails for all images (jpg/png/jpeg/webp).
@@ -52,12 +58,12 @@ import lazyThumbnail from 'vite-plugin-lazy-thumbnails';
 export default defineConfig({
   plugins: [
     lazyThumbnail({
-      quality: 30,           //Thumbnail quality
-      width: 128,            //Thumbnail width
-      skipSmallImages: true, //Skip the small image
-      skipBackground: true,  //Skip the image with a white background
-      minSizeToResize: 30,   //How many KB are not processed
-      blurAmount: 3,         //Blurred pixels
+      quality: 30,          // Thumbnail quality
+      width: 128,           // Thumbnail width
+      skipSmallImages: true,// Skip the small image
+      skipBackground: true, // Skip background image
+      minSizeToResize: 30,  // How many KB are not processed
+      blurAmount: 3,        // Blurred pixels
       transitionDuration: '0.3s'
     }),
   ],

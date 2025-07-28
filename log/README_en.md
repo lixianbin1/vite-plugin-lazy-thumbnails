@@ -51,3 +51,8 @@ Complete the above basic functions (thumbnail generation, progressive loading, b
 
   - Add algorithms for thumbnail and rendering size to prevent height deviation of 1px and size fluctuations caused by thumbnail replacement of the original image
   - Modify the style of the background image to fill the background container.
+
+# v0.5.0
+
+ - During the compilation process, the replacement of image path strings in JS was written in AST format, which has higher performance and safer writing.
+ - Updated some text introductions and dependency libraries.
