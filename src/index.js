@@ -1,8 +1,8 @@
 /*!
- * vite-plugin-lazy-thumbnails JavaScript Library v0.4.2
+ * vite-plugin-lazy-thumbnails JavaScript Library v0.5.0
  * https://www.npmjs.com/package/vite-plugin-lazy-thumbnails
  *
- * Date: 2025-07-21T17:30Z
+ * Date: 2025-07-28T09:18Z
  */
 // 引入 Node.js 内置模块
 const path = require('path');                   // 路径处理
@@ -128,7 +128,7 @@ function thumbnailLoading(options = {}) {
   // 默认配置
   const defaultOptions = {
     quality: 30,          // 缩略图质量
-    width: 128,            // 缩略图宽度
+    width: 128,           // 缩略图宽度
     skipSmallImages: true,// 跳过小图
     skipBackground: true, // 跳过背景图
     minSizeToResize: 30,  // 小于多少KB不处理
@@ -145,6 +145,7 @@ function thumbnailLoading(options = {}) {
       // 处理图片
       const processPromises = [];
       for (const [filename, asset] of Object.entries(bundle)) {
+        console.log('filename', filename);
         // 仅处理图片资源
         if (!/\.(jpg|png|jpeg|webp|avif|gif)$/i.test(filename)) continue;
 
@@ -200,16 +201,35 @@ function thumbnailLoading(options = {}) {
       await Promise.all(processPromises);
     },
 
-    // ── ② 对 JS 中出现的静态图片路径，替换为缩略图路径
+    // ── ② 对 JS 产物中出现的静态图片路径，替换为缩略图路径（AST）
     renderChunk(code) {
-      return code.replace(
-        /(const\s+\w+\s*=\s*["'])(.*?\.(jpg|png|jpeg|webp|avif|gif))(["'])/gi,
-        (_, prefix, imgPath, ext, suffix) => {
-          const thumbPath = getThumbnailPath(imgPath);
-          return `${prefix}${thumbPath}${suffix}`;
-        }
-      );
-
+      const babel = require('@babel/parser');
+      const traverse = require('@babel/traverse').default;
+      const MagicString = require('magic-string').default || require('magic-string');
+      let ast;
+      try {
+        ast = babel.parse(code, { sourceType: 'module' });
+      } catch {
+        return null; // 不是 JS，跳过
+      }
+      const s = new MagicString(code);
+      let hasReplaced = false;
+      traverse(ast, {
+        StringLiteral(path) {
+          const { value } = path.node;
+          if (/\.(jpg|png|jpeg|webp|avif|gif)$/i.test(value)) {
+            const thumb = getThumbnailPath(value);
+            // 替换为缩略图路径
+            s.overwrite(path.node.start, path.node.end, JSON.stringify(thumb));
+            hasReplaced = true;
+          }
+        },
+      });
+      if (!hasReplaced) return null;
+      return {
+        code: s.toString(),
+        map: s.generateMap({ hires: true }),
+      };
     },
 
     // ── ③ 把运行时脚本注入到最终 HTML <body> 末尾

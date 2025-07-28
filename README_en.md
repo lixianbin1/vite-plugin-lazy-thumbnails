@@ -10,6 +10,12 @@
 
 A Vite plugin for generating image thumbnails and implementing progressive image loading effects on page load, for optimizing the experience, simple and convenient
 
+apply to：
+ 
+ - The project built by Vite
+ - If your picture is too large, you can use it.
+ - If you want to avoid grid loading of images when accessing a page, you can use it
+
 Key features:
 
  - Thumbnail generation: Generate low-quality, small-sized thumbnails for all images (jpg/png/jpeg/webp).
